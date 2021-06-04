@@ -19,7 +19,7 @@ ARCHITECTURE FDBuffArc of FDBuff is
 begin
 	process(clk)
 	begin
-		IF rising_edge(clk) THEN
+		IF falling_edge(clk) THEN
             MemoryToRegister <= MemoryToRegisterin;
 			RegisterWrite <= RegisterWritein;
 			ALUresult <= ALUresultin;

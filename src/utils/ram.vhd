@@ -22,11 +22,11 @@ ARCHITECTURE syncrama OF ram is
 			begin
 				if rising_edge(clk) THEN  
 					if we = '1' THEN
-						ram(to_integer(unsigned(address))) <= datain(15 downto 0);
-						ram((to_integer(unsigned(address)))+1) <= datain(31 downto 16);
+						ram(to_integer(unsigned(address))) <= datain(31 downto 16);
+						ram((to_integer(unsigned(address)))+1) <= datain(15 downto 0);
 					end if;
 				end if;
 		end process;
-		dataout(15 downto 0) <= ram(to_integer(unsigned(address)));
-		dataout(31 downto 16) <= ram((to_integer(unsigned(address))) +1);
+		dataout(31 downto 16)<= ram(to_integer(unsigned(address)));
+		dataout(15 downto 0) <= ram((to_integer(unsigned(address))) +1);
 end syncrama;

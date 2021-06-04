@@ -20,7 +20,7 @@ ARCHITECTURE FDBuffArc of FDBuff is
 begin
 	process(clk)
 	begin
-		IF rising_edge(clk) THEN
+		IF falling_edge(clk) THEN
 			PCout <= PC;
 			instructionOut <= instruction;
 			in_portOut <= in_port;

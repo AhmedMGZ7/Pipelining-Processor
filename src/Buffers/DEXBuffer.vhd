@@ -39,7 +39,7 @@ ARCHITECTURE DEXBufferArc of DEXBuffer is
 begin
 	process(clk)
 	begin
-		IF rising_edge(clk) THEN
+		IF falling_edge(clk) THEN
         PC <= PCin; 
         Rsrc1Value <= Rsrc1Valuein ;
         Rsrc2Value <= Rsrc2Valuein ;
