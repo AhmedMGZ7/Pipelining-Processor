@@ -1,16 +1,21 @@
-
+-- TODO  Fetch write from beginning 
 library ieee;
 use ieee.STD_LOGIC_1164.all;
 use ieee.numeric_std.all;
 
-entity CPU is
+entity fetch is
   port (
     clk   : in std_logic;
-    reset : in std_logic
+    reset : in std_logic;
+    PC_write : in std_logic;
+    PC_Address : in std_logic_vector(31 downto 0);
+    Branch : in std_logic;
+    PCUpdated : out std_logic_vector(31 downto 0);
+    Instruction : out std_logic_vector(31 downto 0)
   );
-end entity CPU;
+end entity fetch;
 
-architecture CPUarc of CPU is
+architecture fetcharc of fetch is
   component ram is
     port (
       clk     : in std_logic;
@@ -29,22 +34,30 @@ architecture CPUarc of CPU is
       q   : out std_logic_vector(31 downto 0) := (others => '0')
     );
   end component;
-  component FDBuff is
-    port(
-	    clk : in std_logic; 
-	    PC : in std_logic_vector(31 downto 0);
-	    instruction : in std_logic_vector(31 downto 0);
-	    in_port : in std_logic_vector(31 downto 0);
-	    PCout : out std_logic_vector(31 downto 0);
-	    instructionOut : out std_logic_vector(31 downto 0);
-	    in_portOut : out std_logic_vector(31 downto 0)
-	);
+  component PCData is
+    port (
+      instruction : in std_logic_vector(31 downto 0);
+      PCin : in std_logic_vector(31 downto 0);
+      PC : out std_logic_vector(31 downto 0)
+    );
   end component;
-  signal PCdata1,indata,instruction,PcBuf,portinbuf,portin,instructionout : std_logic_vector(31 downto 0);
+  component mux2x1 IS 
+	PORT (
+		clk,sel : IN std_logic; 
+		in0,in1 : IN std_logic_vector (31 DOWNTO 0);
+		out1 : OUT std_logic_vector (31 DOWNTO 0)
+		);
+    END component;
+  signal PCdatain,PCdataOut,instructionout : std_logic_vector(31 downto 0);
+  signal PCnew : std_logic_vector(31 downto 0);
+  signal clk_mux : std_logic;
   begin
-    PC: reg port map (clk,'1',reset,PCdata1,PCdata1);
-    in_port: reg port map (clk,'1',reset,portin,portin);
-    ram_inst: ram port map(clk, '0', PCdata1, indata, instruction);
-    fetchDecodeBuffer : FDBuff port map(clk, PCdata1,portin, instruction, PcBuf, portinbuf, instructionout);
+    clk_mux <= not clk;
+    PCmux : mux2x1 port map (clk_mux,Branch,PCnew,PC_Address,PCdatain);
+    PCINcrement : PCData port map (instructionout,PCdataOut,PCnew);
+    PC: reg port map (clk,PC_write,reset,PCdatain,PCdataOut);
+    ram_inst: ram port map(clk, '0', PCdataOut, indata, instructionout);
+    Instruction <= instructionout;
+    PCUpdated <= PCnew;
 end architecture;
 							
