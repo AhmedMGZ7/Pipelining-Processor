@@ -16,6 +16,7 @@ end ALU;
 
 architecture ALUarc of ALU is
   signal temp_cout, temp_neg, temp_zero:  std_logic;
+  signal shift_left_result,shift_right_result : std_logic_vector (n downto 0);
 
     begin
 
@@ -36,10 +37,8 @@ architecture ALUarc of ALU is
       else (rdst and rsrc) when (opCode(5 downto 0) = "010110") -- AND rdst
       else (rdst or rsrc) when (opCode(5 downto 0) = "011000") -- OR rdst
       else (rdst+shift_immediate) when (opCode(5 downto 0) = "011010") -- IAdd rdst
-      -- else (rsrc << shift_immediate) when (opCode(5 downto 0) = "011100") -- SHL rdst
-      -- else (rsrc >> shift_immediate) when (opCode(5 downto 0) = "011110") -- SHR rdst
-      -- else ( shift_left(rsrc, 2) ) when (opCode(5 downto 0) = "011100") -- SHL rdst
-      -- else (rsrc sll shift_immediate) when (opCode(5 downto 0) = "011110") -- SHR rdst
+      else (shift_left_result(n-1 downto 0)) when (opCode(5 downto 0) = "011100") -- SHL rdst
+      else (shift_right_result(n downto 1)) when (opCode(5 downto 0) = "011110") -- SHR rdst
       else (rdst(30 downto 0)&temp_cout) when (opCode(5 downto 0) = "001010") -- RLC rdst
       else (temp_cout & rdst(31 downto 1)) when (opCode(5 downto 0) = "001011") -- RRC rdst
       else (sp_in) when (opCode(5 downto 0) = "100000") -- push rdst
@@ -53,6 +52,37 @@ architecture ALUarc of ALU is
       else sp_in+2 when (opCode(5 downto 0) = "100010")
       else (others => '0');
 
+      -- the shift left and right
+      lblShiftLef: shift_left_result <= '0' & std_logic_vector(shift_left(unsigned(rsrc), to_integer(unsigned(shift_immediate))));
+      lblShiftRight: shift_right_result <=  std_logic_vector(shift_right(unsigned(rsrc), to_integer(unsigned(shift_immediate))))&'0';
 
+      
+      -- calculating the carry
+      lblCarry: fcout <= ( '0' ) when (opCode(5 downto 0) = "000000") -- NOP
+      else ('0') when (opCode(5 downto 0) = "000001") -- setC
+      else ('1') when (opCode(5 downto 0) = "000010") -- CLRC
+      else ('0') when (opCode(5 downto 0) = "001111") -- CLR rdst
+      else ('0') when (opCode(5 downto 0) = "000100") -- NOT rdst
+      else ('0') when (opCode(5 downto 0) = "000101") -- inc rdst
+      else ('0') when (opCode(5 downto 0) = "000110") -- dec rdst
+      else ('0') when (opCode(5 downto 0) = "000111") -- NEG rdst
+      else ('0') when (opCode(5 downto 0) = "001000") -- OUT rdst
+      else ('0') when (opCode(5 downto 0) = "001101") -- IN rdst
+      else ('0') when (opCode(5 downto 0) = "010000") -- MOV rdst
+      else ('0') when (opCode(5 downto 0) = "010010") -- Add rdst
+      else ('0') when (opCode(5 downto 0) = "010100") -- SUB rdst
+      else ('0') when (opCode(5 downto 0) = "010110") -- AND rdst
+      else ('0') when (opCode(5 downto 0) = "011000") -- OR rdst
+      else ('0') when (opCode(5 downto 0) = "011010") -- IAdd rdst
+      else ('0') when (opCode(5 downto 0) = "011100") -- SHL rdst
+      else ('0') when (opCode(5 downto 0) = "011110") -- SHR rdst
+      else ('0') when (opCode(5 downto 0) = "001010") -- RLC rdst
+      else ('0') when (opCode(5 downto 0) = "001011") -- RRC rdst
+      else ('0') when (opCode(5 downto 0) = "100000") -- push rdst
+      else ('0') when (opCode(5 downto 0) = "100010") -- pop rdst
+      else ('0') when (opCode(5 downto 0) = "100100") -- LDM rdst
+      else ('0') when (opCode(5 downto 0) = "100110") -- LDD rdst
+      else ('0') when (opCode(5 downto 0) = "101000") -- STD rdst
+      else ( '0');
 
-end architecture;
+  end architecture;
