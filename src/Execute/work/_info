@@ -8,8 +8,17 @@ z2
 !i10f 100
 cModel Technology
 dD:/3rd-year-2nd semster/VLSI/project/CNN_Project_2/cnn_module
+T_opt
+!s110 1622914802
+VXjzh]<VO1IE7haJboha=?2
+04 3 6 work alu aluarc 1
+=1-c85b7695ae72-60bbb6f0-3d2-21dc
+o-quiet -auto_acc_if_foreign -work work
+tCvgOpt 0
+n@_opt
+OL;O;10.5;63
 Ealu
-Z0 w1622907348
+Z0 w1622914779
 Z1 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
 Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 Z3 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
@@ -24,9 +33,9 @@ V8BRTB4H9F`eU=BCdXDJDA3
 !s100 iRn8g2GlQU=7OQ3o^ON[63
 Z9 OL;C;10.5;63
 32
-Z10 !s110 1622907351
+Z10 !s110 1622914785
 !i10b 1
-Z11 !s108 1622907351.000000
+Z11 !s108 1622914785.000000
 Z12 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Execute/ALU.vhd|
 Z13 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Execute/ALU.vhd|
 !i113 0
@@ -38,11 +47,11 @@ R2
 R3
 R4
 R5
-Z16 DEx4 work 3 alu 0 22 8BRTB4H9F`eU=BCdXDJDA3
-l21
+DEx4 work 3 alu 0 22 8BRTB4H9F`eU=BCdXDJDA3
+l22
 L17
-Vg>@S?6l?55F?fPjk>hDmb1
-!s100 fQHdJJjEjKo8SUjZ:k[je2
+VfKnNAS3n2B2fd^^3fS^TQ3
+!s100 QAVLF50;bC9cAOk?o69jk0
 R9
 32
 R10
