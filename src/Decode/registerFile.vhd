@@ -29,20 +29,21 @@ architecture registerFilearc of registerFile is
   end component;
   signal R0data,R1data,R2data,R3data,R4data,R5data,R6data,R7data : std_logic_vector(31 downto 0); 
   signal R0dataOut,R1dataOut,R2dataOut,R3dataOut,R4dataOut,R5dataOut,R6dataOut,R7dataOut : std_logic_vector(31 downto 0); 
+  signal Rsrc1ValueS, Rsrc2ValueS : std_logic_vector(31 downto 0); 
   begin
     --------registers------------------
-    R0 : reg port map (clk,'1',reset,R0data,R0dataOut);
-    R1 : reg port map (clk,'1',reset,R1data,R1dataOut);
-    R2 : reg port map (clk,'1',reset,R2data,R2dataOut);
-    R3 : reg port map (clk,'1',reset,R3data,R3dataOut);
-    R4 : reg port map (clk,'1',reset,R4data,R4dataOut);
-    R5 : reg port map (clk,'1',reset,R5data,R5dataOut);
-    R6 : reg port map (clk,'1',reset,R6data,R6dataOut);
-    R7 : reg port map (clk,'1',reset,R7data,R7dataOut);
+    R0 : reg port map (clk,'1','0',R0data,R0dataOut);
+    R1 : reg port map (clk,'1','0',R1data,R1dataOut);
+    R2 : reg port map (clk,'1','0',R2data,R2dataOut);
+    R3 : reg port map (clk,'1','0',R3data,R3dataOut);
+    R4 : reg port map (clk,'1','0',R4data,R4dataOut);
+    R5 : reg port map (clk,'1','0',R5data,R5dataOut);
+    R6 : reg port map (clk,'1','0',R6data,R6dataOut);
+    R7 : reg port map (clk,'1','0',R7data,R7dataOut);
     --------------------------------------
     --------getting values of sources--------------
     With Rsrc1 select
-    Rsrc1Value <= R0dataOut when "000",
+    Rsrc1ValueS <= R0dataOut when "000",
     R1dataOut when "001",
     R2dataOut when "010",
     R3dataOut when "011",
@@ -50,9 +51,9 @@ architecture registerFilearc of registerFile is
     R5dataOut when "101",
     R6dataOut when "110",
     R7dataOut when "111",
-    (others => '0') when others;
+    (others => 'U') when others;
     With Rsrc2 select
-    Rsrc2Value <= R0dataOut when "000",
+    Rsrc2ValueS <= R0dataOut when "000",
     R1dataOut when "001",
     R2dataOut when "010",
     R3dataOut when "011",
@@ -60,7 +61,7 @@ architecture registerFilearc of registerFile is
     R5dataOut when "101",
     R6dataOut when "110",
     R7dataOut when "111",
-    (others => '0') when others;
+    (others => 'U') when others;
 
     R0data <= writeData when Rdst = "000" and registerWrite = '1';
     R1data <= writeData when Rdst = "001" and registerWrite = '1';
@@ -70,5 +71,12 @@ architecture registerFilearc of registerFile is
     R5data <= writeData when Rdst = "101" and registerWrite = '1';
     R6data <= writeData when Rdst = "110" and registerWrite = '1';
     R7data <= writeData when Rdst = "111" and registerWrite = '1';
+    process(clk)
+    begin
+      if rising_edge(clk) then
+        Rsrc1Value <= Rsrc1ValueS;
+        Rsrc2Value <= Rsrc2ValueS;
+      end if;
+    end process;
 end architecture;
 							

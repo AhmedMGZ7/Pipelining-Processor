@@ -24,9 +24,10 @@ ARCHITECTURE syncrama OF ram is
 					if we = '1' THEN
 						ram(to_integer(unsigned(address))) <= datain(31 downto 16);
 						ram((to_integer(unsigned(address)))+1) <= datain(15 downto 0);
+					else
+						dataout(31 downto 16)<= ram(to_integer(unsigned(address)));
+						dataout(15 downto 0) <= ram((to_integer(unsigned(address))) +1);
 					end if;
 				end if;
 		end process;
-		dataout(31 downto 16)<= ram(to_integer(unsigned(address)));
-		dataout(15 downto 0) <= ram((to_integer(unsigned(address))) +1);
 end syncrama;

@@ -1,3 +1,4 @@
+-- todo 3adel el mux shelt mno el clk
 library ieee;
 use ieee.STD_LOGIC_1164.all;
 use ieee.numeric_std.all;
