@@ -48,7 +48,7 @@ architecture fetcharc of fetch is
 		out1 : OUT std_logic_vector (31 DOWNTO 0)
 		);
     END component;
-  signal PCdatain,PCdataOut,instructionout : std_logic_vector(31 downto 0);
+  signal PCdatain,PCdataOut,indata,instructionout : std_logic_vector(31 downto 0);
   signal PCnew : std_logic_vector(31 downto 0);
   signal clk_mux : std_logic;
   begin
