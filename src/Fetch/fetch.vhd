@@ -43,21 +43,26 @@ architecture fetcharc of fetch is
   end component;
   component mux2x1 IS 
 	PORT (
-		clk,sel : IN std_logic; 
+		sel : IN std_logic; 
 		in0,in1 : IN std_logic_vector (31 DOWNTO 0);
 		out1 : OUT std_logic_vector (31 DOWNTO 0)
 		);
     END component;
   signal PCdatain,PCdataOut,indata,instructionout : std_logic_vector(31 downto 0);
   signal PCnew : std_logic_vector(31 downto 0);
-  signal clk_mux : std_logic;
+  signal clk_pc : std_logic;
   begin
-    clk_mux <= not clk;
-    PCmux : mux2x1 port map (clk_mux,Branch,PCnew,PC_Address,PCdatain);
+    clk_pc <= not clk;
+    PCmux : mux2x1 port map (Branch,PCnew,PC_Address,PCdatain);
+    PC: reg port map (clk_pc,PC_write,reset,PCdatain,PCdataOut);
     PCINcrement : PCData port map (instructionout,PCdataOut,PCnew);
-    PC: reg port map (clk,PC_write,reset,PCdatain,PCdataOut);
     ram_inst: ram port map(clk, '0', PCdataOut, indata, instructionout);
     Instruction <= instructionout;
-    PCUpdated <= PCnew;
+    process(clk)
+    begin
+      if rising_edge(clk) then
+      PCUpdated <= PCnew;
+      end if;
+    end process;
 end architecture;
 							

@@ -18,7 +18,7 @@ BEGIN
 		IF rising_edge(clk) and en = '1' and reset = '0' THEN     
 			q <= d;
 		END IF;
-		if reset = '1' then
+		if rising_edge(clk) and reset = '1' then
 			q <= (others => '0');
 		end if;
 	END PROCESS;
