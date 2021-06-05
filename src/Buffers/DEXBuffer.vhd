@@ -15,21 +15,21 @@ Entity DEXBuffer is
     Rdstin : in std_logic_vector(2 downto 0);
     in_portin : in std_logic_vector(31 downto 0);
     controlsignals : in std_logic_vector(12 downto 0);
-    PC : in std_logic_vector(31 downto 0);
-	Rsrc1Value : in std_logic_vector(31 downto 0);
-	Rsrc2Value : in std_logic_vector(31 downto 0);
-	immediateValue : in std_logic_vector(31 downto 0);
-	shmat : in std_logic_vector(31 downto 0);
-    Rsrc : in std_logic_vector(2 downto 0);
-    Rdst : in std_logic_vector(2 downto 0);
-    in_port : in std_logic_vector(31 downto 0);
-    ALU_Op : std_logic_vector(5 downto 0);
-    Imm_Shift : out std_logic
-    Branch : out std_logic
-    Memory_Read : out std_logic
-    Memory_Write : out std_logic
-    Register_Write  : out std_logic
-    MemoryToRegister : out std_logic
+    PC : out std_logic_vector(31 downto 0);
+	Rsrc1Value : out std_logic_vector(31 downto 0);
+	Rsrc2Value : out std_logic_vector(31 downto 0);
+	immediateValue : out std_logic_vector(31 downto 0);
+	shmat : out std_logic_vector(31 downto 0);
+    Rsrc : out std_logic_vector(2 downto 0);
+    Rdst : out std_logic_vector(2 downto 0);
+    in_port : out std_logic_vector(31 downto 0);
+    ALU_Op : out std_logic_vector(5 downto 0);
+    Imm_Shift : out std_logic;
+    Branch : out std_logic;
+    Memory_Read : out std_logic;
+    Memory_Write : out std_logic;
+    Register_Write  : out std_logic;
+    MemoryToRegister : out std_logic;
     out_port : out std_logic
 	);
 end entity;
