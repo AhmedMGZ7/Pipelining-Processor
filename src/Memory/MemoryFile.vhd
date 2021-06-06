@@ -28,6 +28,7 @@ architecture MemoryFilearc of MemoryFile is
     signal dataout : std_logic_vector(31 downto 0);
     begin
     ram_inst_Data: ram port map(clk, MemoryWrite , ALUresult, RdstValue, dataout);
-    data <= dataout when MemoryRead = '1';
+    data <= dataout when MemoryRead = '1'else
+    (others => '0');
 end architecture;
 							

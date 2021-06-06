@@ -1,4 +1,4 @@
-Mlibrary ieee;
+library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
@@ -7,7 +7,6 @@ Entity EXMBuffer is
 	port(
         Clk : in std_logic;
         ALUresultin : in std_logic_vector(31 downto 0);
-        CCRin : in std_logic_vector(2 downto 0);
         PCin : in std_logic_vector(31 downto 0);
         RdstValuein : in std_logic_vector(31 downto 0);
         Rdstin : in std_logic_vector(2 downto 0);
@@ -17,7 +16,6 @@ Entity EXMBuffer is
         Memory_Writein : in std_logic;
         out_portin : in std_logic;
         ALUresult : out std_logic_vector(31 downto 0);
-        CCR : out std_logic_vector(2 downto 0);
         PC : out std_logic_vector(31 downto 0);
         RdstValue : out std_logic_vector(31 downto 0);
         Rdst : out std_logic_vector(2 downto 0);
@@ -36,7 +34,6 @@ begin
 	begin
 		IF falling_edge(clk) THEN
             ALUresult <= ALUresultin;
-            CCR <= CCRin;
             PC <= PCin;
             RdstValue <= RdstValuein;
             Rdst <= Rdstin;

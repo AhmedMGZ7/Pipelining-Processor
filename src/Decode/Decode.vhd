@@ -10,6 +10,7 @@ entity Decode is
     instruction : in std_logic_vector(31 downto 0);
     registerWrite : in std_logic;
     writeData : in std_logic_vector(31 downto 0);
+    Rdst : in std_logic_vector(2 downto 0); 
     Source1 : out std_logic_vector(31 downto 0);
     Source2 : out std_logic_vector(31 downto 0);
     shamt : out std_logic_vector(31 downto 0);
@@ -46,7 +47,7 @@ architecture Decodearc of Decode is
   signal signals : std_logic_vector(12 downto 0);
   -----------------------------
   begin
-    RegFile : registerFile port map(clk,reset,registerWrite,instruction(26 downto 24), instruction(23 downto 21),instruction(23 downto 21),writeData,Rs1Value,Rs2Value);
+    RegFile : registerFile port map(clk,reset,registerWrite,instruction(26 downto 24), instruction(23 downto 21),Rdst,writeData,Rs1Value,Rs2Value);
     ControlUnit : CU port map(instruction,signals);
     process(clk)
     begin
