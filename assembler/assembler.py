@@ -1,10 +1,10 @@
 import re
 
 
-in_file_name = "TowOperand.asm"
-in_file_name = "OneOperand.asm"
 in_file_name = "Memory.asm"
 in_file_name = "Branch.asm"
+in_file_name = "OneOperand.asm"
+in_file_name = "TowOperand.asm"
 out_file_name = in_file_name.split('.')[0] + ".mem"
 mem_size = 2**16  # words
 word_size = 16
@@ -18,8 +18,8 @@ print(out_file_name)
 # *shamd* -> shift amount
 dic_category_format = {
     'one-operand': "00*opcode*00*rdst*00000",
-    'tow-operand': "01*opcode**rsrc**rdst**shamd*",  # can have immediate value
-    'memory': "10*opcode**rsrc**rdst*00000",
+    'tow-operand': "01*opcode**rdst**rsrc**shamd*",  # can have immediate value
+    'memory': "10*opcode**rdst**rsrc*00000",
     'branch': "11*opcode*000*rdst*00000",
 }
 operations_db = {
@@ -37,7 +37,7 @@ operations_db = {
     },
     "clr": {
         'type': 'one-operand',
-        'opcode': '0011'
+        'opcode': '1111'
     },
     "not": {
         'type': 'one-operand',
@@ -61,7 +61,7 @@ operations_db = {
     },
     "in": {
         'type': 'one-operand',
-        'opcode': '1001'
+        'opcode': '1101'
     },
     "rlc": {
         'type': 'one-operand',
