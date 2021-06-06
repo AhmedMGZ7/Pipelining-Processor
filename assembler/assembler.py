@@ -260,7 +260,7 @@ with open(in_file_name, "r") as in_file:
                         immediate = binarize(int(values[1], 16), word_size)
                     elif operations_db[inst_parts[0]]['shamd']:
                         shamd = binarize(int(values[1]), 5)
-                        rsrc = binarize(int(registers[0][1:]), 3)
+                        rdst = binarize(int(registers[0][1:]), 3)
                     else:
                         rdst = binarize(int(registers[1][1:]), 3)
                         rsrc = binarize(int(registers[0][1:], 16), 3)
