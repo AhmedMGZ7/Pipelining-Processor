@@ -6,7 +6,7 @@ in_file_name = "OneOperand.asm"
 in_file_name = "Memory.asm"
 in_file_name = "Branch.asm"
 out_file_name = in_file_name.split('.')[0] + ".mem"
-mem_size = 600  # words
+mem_size = 2**16  # words
 word_size = 16
 memory = ["0"*16 for _ in range(mem_size)]
 current_location = 0
@@ -338,5 +338,14 @@ with open(in_file_name, "r") as in_file:
                     memory[current_location] = binary_code
                     current_location += 1
         print("instruction: *" + instruction + '*')
-print("memory is ")
-[print(i, ":", hex(i), "=>", val) for i, val in enumerate(memory)]
+print("memory is written to " + out_file_name)
+# [print(i, ":", hex(i), "=>", val) for i, val in enumerate(memory)]
+metadata = """
+// memory data file (do not edit the following line - required for mem load use)
+// instance=/ram/ram
+// format=bin addressradix=h dataradix=b version=1.0 wordsperline=1
+"""
+with open(out_file_name, "w") as out_file:
+    out_file.write(metadata)
+    for i, val in enumerate(memory):
+        out_file.write("@"+hex(i)[2:]+" "+val+'\n')

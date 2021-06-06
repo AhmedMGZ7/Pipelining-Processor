@@ -1,0 +1,347 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/modeltech64_10.5/examples
+T_opt
+!s110 1622985530
+V9:BKcIjLS6TQ7VAJ1zNGk0
+04 6 9 work memory memoryarc 1
+=1-c85b7695ae72-60bccb39-14d-1a8c
+Z1 o-quiet -auto_acc_if_foreign -work work
+Z2 tCvgOpt 0
+n@_opt
+Z3 OL;O;10.5;63
+R0
+T_opt1
+!s110 1622985993
+V9E1AF7]eRYBWBI0;LW=Pj1
+04 3 8 work ram syncrama 1
+=1-c85b7695ae72-60bccd08-37d-1ffc
+R1
+R2
+n@_opt1
+R3
+Ememory
+Z4 w1622984173
+Z5 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z6 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z7 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
+Z8 dD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/project
+Z9 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/Memory.vhd
+Z10 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/Memory.vhd
+l0
+L5
+Vc<@P7hz660=U5jFBXc:]V2
+!s100 AX;BOhdBhYI4LbU0P741G2
+Z11 OL;C;10.5;63
+32
+Z12 !s110 1622985984
+!i10b 1
+Z13 !s108 1622985984.000000
+Z14 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/Memory.vhd|
+Z15 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/Memory.vhd|
+!i113 0
+Z16 o-work work -2002 -explicit
+Z17 tExplicit 1 CvgOpt 0
+Amemoryarc
+R5
+R6
+R7
+DEx4 work 6 memory 0 22 c<@P7hz660=U5jFBXc:]V2
+l42
+L18
+V0b7mcH=MRVS?W1FGadh7W2
+!s100 j<Hz1SaEo[Z>J]PN5BRWE3
+R11
+32
+R12
+!i10b 1
+R13
+R14
+R15
+!i113 0
+R16
+R17
+Ememoryfile
+R4
+R5
+R6
+R7
+R8
+Z18 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/MemoryFile.vhd
+Z19 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/MemoryFile.vhd
+l0
+L6
+V7@m7d?Jc3g2<;g3IFQIjO3
+!s100 3gg=1mQ8QV`O^YDJzP:CA3
+R11
+32
+R12
+!i10b 1
+R13
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/MemoryFile.vhd|
+Z21 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/Memory/MemoryFile.vhd|
+!i113 0
+R16
+R17
+Amemoryfilearc
+R5
+R6
+R7
+DEx4 work 10 memoryfile 0 22 7@m7d?Jc3g2<;g3IFQIjO3
+l31
+L18
+VS8Y<hVP33Y=?dl3:LFnL_0
+!s100 MJUf3<Y6:aK4?@BhAg[4H2
+R11
+32
+R12
+!i10b 1
+R13
+R20
+R21
+!i113 0
+R16
+R17
+Emux2x1
+Z22 w1622905446
+R6
+R7
+R8
+Z23 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux2x1.vhd
+Z24 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux2x1.vhd
+l0
+L4
+VclEEH0OVX^DPg0Y@5kDoQ3
+!s100 6WZ=Ke5BczafOSG@OzGlf3
+R11
+32
+R12
+!i10b 1
+R13
+Z25 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux2x1.vhd|
+Z26 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux2x1.vhd|
+!i113 0
+R16
+R17
+Awith_select_mux
+R6
+R7
+DEx4 work 6 mux2x1 0 22 clEEH0OVX^DPg0Y@5kDoQ3
+l13
+L12
+VY;eMiYzZ_X;[5K?c5FgWD3
+!s100 k`X@KUV<fhiN`n3^6IhcF2
+R11
+32
+R12
+!i10b 1
+R13
+R25
+R26
+!i113 0
+R16
+R17
+Emux4x2
+Z27 w1622959576
+R6
+R7
+R8
+Z28 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux4x2.vhd
+Z29 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux4x2.vhd
+l0
+L4
+VPS4eL?ChF[GOb<<CTHUjc1
+!s100 PS3JWeo:EJQZ`MPU3=HLc1
+R11
+32
+R12
+!i10b 1
+R13
+Z30 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux4x2.vhd|
+Z31 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/mux4x2.vhd|
+!i113 0
+R16
+R17
+Awith_select_mux4x2
+R6
+R7
+DEx4 work 6 mux4x2 0 22 PS4eL?ChF[GOb<<CTHUjc1
+l13
+L12
+V`CBzcQRK9lRm=RR08AG:F0
+!s100 Td6>V9C5@MGNfE@WCS1RF3
+R11
+32
+R12
+!i10b 1
+R13
+R30
+R31
+!i113 0
+R16
+R17
+Emy_adder
+Z32 w1622892471
+R6
+R7
+R8
+Z33 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/one_adder.vhd
+Z34 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/one_adder.vhd
+l0
+L4
+VE@^_9GU@E6[cdR4H<TC[22
+!s100 V[TcSO_6=i7G`Z4N4obU^0
+R11
+32
+Z35 !s110 1622985985
+!i10b 1
+Z36 !s108 1622985985.000000
+Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/one_adder.vhd|
+Z38 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/one_adder.vhd|
+!i113 0
+R16
+R17
+Aa_my_adder
+R6
+R7
+DEx4 work 8 my_adder 0 22 E@^_9GU@E6[cdR4H<TC[22
+l10
+L9
+V0i?ZkUVSz9E7ZDJEmXgJN2
+!s100 fDkif0Qj2F?nXhRB1Dk7]1
+R11
+32
+R35
+!i10b 1
+R36
+R37
+R38
+!i113 0
+R16
+R17
+Emy_nadder
+R32
+R6
+R7
+R8
+Z39 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/fulladder.vhd
+Z40 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/fulladder.vhd
+l0
+L4
+VPlkzGk>9?RldCANYkhf=<0
+!s100 3NW[UlhcU4QFgT6405mFi0
+R11
+32
+R12
+!i10b 1
+R13
+Z41 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/fulladder.vhd|
+Z42 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/fulladder.vhd|
+!i113 0
+R16
+R17
+Aa_my_nadder
+R6
+R7
+DEx4 work 9 my_nadder 0 22 PlkzGk>9?RldCANYkhf=<0
+l17
+L12
+VBekkL:1fZnmP_QSEPHMmf1
+!s100 GA5j@fCUdUd;AZ`3YdMe72
+R11
+32
+R12
+!i10b 1
+R13
+R41
+R42
+!i113 0
+R16
+R17
+Eram
+R4
+R5
+R6
+R7
+R8
+Z43 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/ram.vhd
+Z44 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/ram.vhd
+l0
+L5
+VjkzJ@cT4:ST8ASDo;PCVX3
+!s100 TV`:0eHok5fN6jIRkNd>:3
+R11
+32
+R12
+!i10b 1
+R13
+Z45 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/ram.vhd|
+Z46 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/ram.vhd|
+!i113 0
+R16
+R17
+Asyncrama
+R5
+R6
+R7
+DEx4 work 3 ram 0 22 jkzJ@cT4:ST8ASDo;PCVX3
+l21
+L16
+VF8]gcNchdGF1XC[oH`KF=0
+!s100 C627I4a^DZWM0k7j067>j1
+R11
+32
+R12
+!i10b 1
+R13
+R45
+R46
+!i113 0
+R16
+R17
+Ereg
+R22
+R6
+R7
+R8
+Z47 8D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/register.vhd
+Z48 FD:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/register.vhd
+l0
+L4
+V`7WT2YKZI7lS?mgbLTK>W1
+!s100 Pi?BaU9[CoT6c:ORa@AJ^3
+R11
+32
+R12
+!i10b 1
+R13
+Z49 !s90 -reportprogress|300|-work|work|-2002|-explicit|-vopt|-stats=none|D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/register.vhd|
+Z50 !s107 D:/3rd-year-2nd semster/computer architecture/project/Pipelining-Processor/src/utils/register.vhd|
+!i113 0
+R16
+R17
+Areg_1
+R6
+R7
+DEx4 work 3 reg 0 22 `7WT2YKZI7lS?mgbLTK>W1
+l15
+L14
+VZN<LLXI130BiRQKfP]Qgh2
+!s100 MXj`Ycj=<Z6:0Dz;ZAZA]2
+R11
+32
+R12
+!i10b 1
+R13
+R49
+R50
+!i113 0
+R16
+R17
