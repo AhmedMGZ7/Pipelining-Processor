@@ -1,12 +1,12 @@
 import re
 
 
+in_file_name = "TowOperand.asm"
 in_file_name = "OneOperand.asm"
 in_file_name = "Memory.asm"
 in_file_name = "Branch.asm"
-in_file_name = "TowOperand.asm"
 out_file_name = in_file_name.split('.')[0] + ".mem"
-mem_size = 30  # words
+mem_size = 600  # words
 word_size = 16
 memory = ["0"*16 for _ in range(mem_size)]
 current_location = 0
@@ -122,27 +122,32 @@ operations_db = {
     "push": {
         'type': 'memory',
         'opcode': '000',
-        'imm': False
+        'imm': False,
+        'offset': False
     },
     "pop": {
         'type': 'memory',
         'opcode': '001',
-        'imm': False
+        'imm': False,
+        'offset': False
     },
     "ldm": {
         'type': 'memory',
         'opcode': '010',
-        'imm': True
+        'imm': True,
+        'offset': False
     },
     "ldd": {
         'type': 'memory',
         'opcode': '011',
-        'imm': True
+        'imm': True,
+        'offset': True
     },
     "std": {
         'type': 'memory',
         'opcode': '100',
-        'imm': True
+        'imm': True,
+        'offset': True
     },
     "jz": {
         'type': 'branch',
@@ -167,10 +172,12 @@ operations_db = {
     "ret": {
         'type': 'branch',
         'opcode': '101',
+        'parameter': False,
     },
     "rti": {
         'type': 'branch',
         'opcode': '110',
+        'parameter': False,
     }
 
 }
@@ -271,10 +278,65 @@ with open(in_file_name, "r") as in_file:
                         current_location += 1
 
                 elif operations_db[inst_parts[0]]['type'] == 'memory':
-                    print("memory ")
-                else:
-                    print("branch")
+                    print("memory")
+                    # 'memory': "10*opcode**rsrc**rdst*00000",
+                    rdst = "000"
+                    rsrc = "000"
+                    immediate = "x"*16
+                    registers = re.findall("r\d+", instruction)
+                    rdst = binarize(int(registers[0][1:], 16), 3)
 
+                    values = splitString(inst_parts[1], ',')
+                    if operations_db[inst_parts[0]]['imm'] and operations_db[inst_parts[0]]['offset']:
+                        # LDD, STD
+                        # STD R1,202(R5)   #M[212]=19
+                        # LDD R3,202(R5)   #R3=19
+                        rsrc = binarize(int(registers[1][1:]), 3)
+                        new_values = splitString(values[1], "(")
+                        immediate = binarize(int(new_values[0]), word_size)
+
+                    elif operations_db[inst_parts[0]]['imm'] and not(operations_db[inst_parts[0]]['offset']):
+                        # LDM
+                        # LDM R1,5     #R1=5
+                        immediate = binarize(int(values[1]), word_size)
+
+                    elif not(operations_db[inst_parts[0]]['imm']) and not(operations_db[inst_parts[0]]['offset']):
+                        # push
+                        pass
+                    else:
+                        # error
+                        raise RuntimeError(
+                            "unexpcted: implementation error consult marait")
+
+                    binary_code = dic_category_format['memory']
+                    binary_code = binary_code.replace('*rdst*', rdst)
+                    binary_code = binary_code.replace('*rsrc*', rsrc)
+                    binary_code = binary_code.replace(
+                        '*opcode*', operations_db[inst_parts[0]]['opcode'])
+                    print(instruction, binary_code,
+                          dic_category_format['memory'], rdst, rsrc, immediate)
+                    memory[current_location] = binary_code
+                    current_location += 1
+                    if operations_db[inst_parts[0]]['imm'] or operations_db[inst_parts[0]]['offset']:
+                        memory[current_location] = immediate
+                        current_location += 1
+
+                else:  # branch
+                    rdst = "000"
+                    rsrc = "000"
+                    immediate = "x"*16
+                    registers = re.findall("r\d+", instruction)
+                    if(len(registers) == 1):
+                        rdst = binarize(int(registers[0][1:], 16), 3)
+
+                    binary_code = dic_category_format['branch']
+                    binary_code = binary_code.replace('*rdst*', rdst)
+                    binary_code = binary_code.replace(
+                        '*opcode*', operations_db[inst_parts[0]]['opcode'])
+                    print(instruction, binary_code,
+                          dic_category_format['branch'], operations_db[inst_parts[0]]['opcode'], rdst, immediate)
+                    memory[current_location] = binary_code
+                    current_location += 1
         print("instruction: *" + instruction + '*')
 print("memory is ")
-[print(hex(i), "=>", val) for i, val in enumerate(memory)]
+[print(i, ":", hex(i), "=>", val) for i, val in enumerate(memory)]
