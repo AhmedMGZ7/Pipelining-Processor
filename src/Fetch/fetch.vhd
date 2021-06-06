@@ -19,6 +19,7 @@ architecture fetcharc of fetch is
   component ram is
     port (
       clk     : in std_logic;
+      en  : in std_logic;
       we      : in std_logic;
       address : in std_logic_vector(31 downto 0);
       datain  : in std_logic_vector(31 downto 0);
@@ -56,7 +57,7 @@ architecture fetcharc of fetch is
     PCmux : mux2x1 port map (Branch,PCnew,PC_Address,PCdatain);
     PC: reg port map (clk_pc,PC_write,reset,PCdatain,PCdataOut);
     PCINcrement : PCData port map (instructionout,PCdataOut,PCnew);
-    ram_inst: ram port map(clk, '0', PCdataOut, indata, instructionout);
+    ram_inst: ram port map(clk,'1', '0', PCdataOut, indata, instructionout);
     Instruction <= instructionout;
     process(clk)
     begin

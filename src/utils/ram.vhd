@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity ram is
 	port(
 		clk : in std_logic;
+		en : in std_logic;
 		we  : in std_logic;
 		address : in  std_logic_vector(31 downto 0);
 		datain  : in  std_logic_vector(31 downto 0);
@@ -20,7 +21,7 @@ ARCHITECTURE syncrama OF ram is
 	begin
 		process(clk) is
 			begin
-				if rising_edge(clk) THEN  
+				if rising_edge(clk) and en = '1' THEN  
 					if we = '1' THEN
 						ram(to_integer(unsigned(address))) <= datain(31 downto 16);
 						ram((to_integer(unsigned(address)))+1) <= datain(15 downto 0);

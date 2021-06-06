@@ -40,7 +40,7 @@ architecture Memoryarc of Memory is
     signal dataoutS : std_logic_vector(31 downto 0);
     signal out_port_reg_out : std_logic_vector(31 downto 0);
     begin
-    OUTPORT : reg port map (clkin,outPortSignal,'0',ALUresultin,out_port_reg_out);
+    OUTPORT : reg port map (clkin,outPortSignal,resetin,ALUresultin,out_port_reg_out);
     MemFile : MemoryFile port map (clkin,resetin,MemoryReadin, MemoryWritein, ALUresultin, RdstValuein , dataoutS);
     dataOut <= dataoutS;
 end architecture;
