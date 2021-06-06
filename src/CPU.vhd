@@ -151,6 +151,18 @@ architecture CPUarc of CPU is
     WriteData : out std_logic_vector(31 downto 0)
   );
   end component;
+  component ForwardingUnit is
+    port (
+      Rdst : in std_logic_vector(2 downto 0);
+      Rsrc : in std_logic_vector(2 downto 0);
+      Rdst_old1 : in std_logic_vector(2 downto 0);
+      Rdst_old2 : in std_logic_vector(2 downto 0);
+      MtoR1 : in std_logic;
+      MtoR2 : in std_logic;
+      Rsrcnew : out std_logic_vector(1 downto 0) ;
+      Rdstnew : out std_logic_vector(1 downto 0) 
+    );
+  end component;
     signal writeDataD : std_logic_vector(31 downto 0);
     signal PC_writeS , BranchS : std_logic;
     signal PCUpdatedS, PC_AddressS, InstructionS, PCoutS, instructionOutS, in_portOutS : std_logic_vector(31 downto 0);
@@ -176,9 +188,10 @@ architecture CPUarc of CPU is
         Fetch_Decode_Buffer: FDBuff port map(clk, PCUpdatedS, InstructionS, in_port_register, PCoutS, instructionOutS, in_portOutS); 
         DecodeStage : Decode port map (clk, reset, instructionOutS,RegisterWriteMWB,writeDataD,RdstMWB, Source1S, Source2S, shamtS, immediateValueS, controlsignalsS);
         Decode_execute_Buffer : DEXBuffer port map(clk,PCoutS,Source1S,Source2S,immediateValueS,shamtS,instructionOutS(26 downto 24),instructionOutS(23 downto 21),in_portOutS,controlsignalsS,PCDEEX,Rsrc1ValueDEEX,Rsrc2ValueDEEX,immediateValueDEEX,shmatDEEX,RsrcDEEX,RdstDEEX,in_portDEEX,ALU_OpDEEX,Imm_ShiftDEEX,BranchDEEX,Memory_ReadDEEX,Memory_WriteDEEX,Register_WriteDEEX,MemoryToRegisterDEEX,out_portDEEX);
-        ExecuteStage : Execute port map (clk, reset, Rsrc1ValueDEEX, Rsrc2ValueDEEX, Rdst_oldEx, Rdst_old2EX, RsrcSelectEX, RdstSelectEX, in_portDEEX, ALU_OpDEEX,Imm_ShiftDEEX, shmatDEEX, immediateValueDEEX, BranchDEEX, BranchedEX, ALUresultEX );
+        ExecuteStage : Execute port map (clk, reset, Rsrc1ValueDEEX, Rsrc2ValueDEEX, writeDataD, ALUresultEXM, RsrcSelectEX, RdstSelectEX, in_portDEEX, ALU_OpDEEX,Imm_ShiftDEEX, shmatDEEX, immediateValueDEEX, BranchDEEX, BranchedEX, ALUresultEX );
         Execute_mem_Buffer: EXMBuffer port map (clk, ALUresultEX,PCDEEX, Rsrc2ValueDEEX, RdstDEEX, MemoryToRegisterDEEX,Register_WriteDEEX,Memory_ReadDEEX,Memory_WriteDEEX, out_portDEEX, ALUresultEXM, PCEXM, RdstValueEXM, RdstEXM, MemoryToRegisterEXM, RegisterWriteEXM,Memory_ReadEXM, Memory_WriteEXM , out_portEXM );
         MemoryStage : Memory port map(clk, reset, Memory_ReadEXM, Memory_WriteEXM, ALUresultEXM, RdstValueEXM, out_portEXM, dataMem);
         Mem_WB_Buffer : MWBBuff port map(clk, MemoryToRegisterEXM ,RegisterWriteEXM, ALUresultEXM, RdstEXM, dataMem, MemoryToRegisterMWB, RegisterWriteMWB, ALUresultMWB, RdstMWB, memory_Data_outMWB );
         WBStage : WB port map(MemoryToRegisterEXM,memory_Data_outMWB,ALUresultMWB,writeDataD);
+        forwarding : ForwardingUnit port map(RdstDEEX,RsrcDEEX,RdstMWB,RdstEXM,MemoryToRegisterEXM,MemoryToRegisterMWB,RsrcSelectEX,RdstSelectEX);
 end architecture;
