@@ -3,8 +3,8 @@ import re
 
 in_file_name = "Memory.asm"
 in_file_name = "Branch.asm"
-in_file_name = "TowOperand.asm"
 in_file_name = "OneOperand.asm"
+in_file_name = "TowOperand.asm"
 out_file_name = in_file_name.split('.')[0] + ".mem"
 mem_size = 2**16  # words
 word_size = 16
@@ -253,14 +253,17 @@ with open(in_file_name, "r") as in_file:
                     immediate = "x"*16
                     registers = re.findall("r\d+", instruction)
 
-                    rdst = binarize(int(registers[0][1:]), 3)
                     values = splitString(inst_parts[1], ',')
                     if operations_db[inst_parts[0]]['imm']:
+                        rdst = binarize(int(registers[0][1:]), 3)
+
                         immediate = binarize(int(values[1], 16), word_size)
                     elif operations_db[inst_parts[0]]['shamd']:
                         shamd = binarize(int(values[1]), 5)
+                        rsrc = binarize(int(registers[0][1:]), 3)
                     else:
-                        rsrc = binarize(int(registers[1][1:], 16), 3)
+                        rdst = binarize(int(registers[1][1:]), 3)
+                        rsrc = binarize(int(registers[0][1:], 16), 3)
 
                     binary_code = dic_category_format['tow-operand']
                     binary_code = binary_code.replace('*rdst*', rdst)
