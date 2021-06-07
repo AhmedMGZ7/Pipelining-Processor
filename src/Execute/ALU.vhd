@@ -89,84 +89,84 @@ architecture ALUarc of ALU is
       lblCarry: temp_cout <= flag_reg(0) when (opCode(5 downto 0) = "000000") -- NOP
       else ('1') when (opCode(5 downto 0) = "000001") -- setC
       else ('0') when (opCode(5 downto 0) = "000010") -- CLRC
-      else ('0') when (opCode(5 downto 0) = "001111") -- CLR rdst
-      else ('0') when (opCode(5 downto 0) = "000100") -- NOT rdst
-      else ('0') when (opCode(5 downto 0) = "000101") -- inc rdst
-      else ('0') when (opCode(5 downto 0) = "000110") -- dec rdst
-      else ('0') when (opCode(5 downto 0) = "000111") -- NEG rdst
-      else ('0') when (opCode(5 downto 0) = "001000") -- OUT rdst
-      else ('0') when (opCode(5 downto 0) = "001101") -- IN rdst
-      else ('0') when (opCode(5 downto 0) = "010000") -- MOV rdst
-      else (add_result(n)) when (opCode(5 downto 0) = "010010") -- Add rdst
-      else (sub_result(n)) when (opCode(5 downto 0) = "010100") -- SUB rdst
-      else ('0') when (opCode(5 downto 0) = "010110") -- AND rdst
-      else ('0') when (opCode(5 downto 0) = "011000") -- OR rdst
-      else (iadd_result(n)) when (opCode(5 downto 0) = "011010") -- IAdd rdst
-      else (shift_left_result(n)) when (opCode(5 downto 0) = "011100") -- SHL rdst
-      else (shift_left_result(0)) when (opCode(5 downto 0) = "011110") -- SHR rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "001111") -- CLR rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "000100") -- NOT rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "000101") -- inc rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "000110") -- dec rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "000111") -- NEG rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "001000") -- OUT rdst
+      else flag_reg(0) when (opCode(5 downto 0) = "001101") -- IN rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "01000") -- MOV rdst
+      else (add_result(n)) when (opCode(5 downto 1) = "01001") -- Add rdst
+      else (sub_result(n)) when (opCode(5 downto 1) = "01010") -- SUB rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "01011") -- AND rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "01100") -- OR rdst
+      else (iadd_result(n)) when (opCode(5 downto 1) = "01101") -- IAdd rdst
+      else (shift_left_result(n)) when (opCode(5 downto 1) = "01110") -- SHL rdst
+      else (shift_left_result(0)) when (opCode(5 downto 1) = "01111") -- SHR rdst
       else (rdst(n-1)) when (opCode(5 downto 0) = "001010") -- RLC rdst
       else (rdst(0)) when (opCode(5 downto 0) = "001011") -- RRC rdst
-      else ('0') when (opCode(5 downto 0) = "100000") -- push rdst
-      else ('0') when (opCode(5 downto 0) = "100010") -- pop rdst
-      else ('0') when (opCode(5 downto 0) = "100100") -- LDM rdst
-      else ('0') when (opCode(5 downto 0) = "100110") -- LDD rdst
-      else ('0') when (opCode(5 downto 0) = "101000") -- STD rdst
-      else ( '0');
+      else flag_reg(0) when (opCode(5 downto 1) = "10000") -- push rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "10001") -- pop rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "10010") -- LDM rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "10011") -- LDD rdst
+      else flag_reg(0) when (opCode(5 downto 1) = "10100") -- STD rdst
+      else flag_reg(0);
 
       -- calculating the zero
       lblZero: fzero <= flag_reg(2) when (opCode(5 downto 0) = "000000") -- NOP
-      else ('0') when (opCode(5 downto 0) = "000001") -- setC
-      else ('0') when (opCode(5 downto 0) = "000010") -- CLRC
+      else flag_reg(2) when (opCode(5 downto 0) = "000001") -- setC
+      else flag_reg(2) when (opCode(5 downto 0) = "000010") -- CLRC
       else ('1') when (opCode(5 downto 0) = "001111") -- CLR rdst
       else (temp_zero) when (opCode(5 downto 0) = "000100") -- NOT rdst
       else (temp_zero) when (opCode(5 downto 0) = "000101") -- inc rdst
       else (temp_zero) when (opCode(5 downto 0) = "000110") -- dec rdst
       else (temp_zero) when (opCode(5 downto 0) = "000111") -- NEG rdst
-      else ('0') when (opCode(5 downto 0) = "001000") -- OUT rdst
-      else ('0') when (opCode(5 downto 0) = "001101") -- IN rdst
-      else ('0') when (opCode(5 downto 0) = "010000") -- MOV rdst
-      else (temp_zero) when (opCode(5 downto 0) = "010010") -- Add rdst
-      else (temp_zero) when (opCode(5 downto 0) = "010100") -- SUB rdst
-      else (temp_zero) when (opCode(5 downto 0) = "010110") -- AND rdst
-      else (temp_zero) when (opCode(5 downto 0) = "011000") -- OR rdst
-      else (temp_zero) when (opCode(5 downto 0) = "011010") -- IAdd rdst
-      else ('0') when (opCode(5 downto 0) = "011100") -- SHL rdst
-      else ('0') when (opCode(5 downto 0) = "011110") -- SHR rdst
-      else ('0') when (opCode(5 downto 0) = "001010") -- RLC rdst
-      else ('0') when (opCode(5 downto 0) = "001011") -- RRC rdst
-      else ('0') when (opCode(5 downto 0) = "100000") -- push rdst
-      else ('0') when (opCode(5 downto 0) = "100010") -- pop rdst
-      else ('0') when (opCode(5 downto 0) = "100100") -- LDM rdst
-      else ('0') when (opCode(5 downto 0) = "100110") -- LDD rdst
-      else ('0') when (opCode(5 downto 0) = "101000") -- STD rdst
-      else ( '0');
+      else flag_reg(2) when (opCode(5 downto 0) = "001000") -- OUT rdst
+      else flag_reg(2) when (opCode(5 downto 0) = "001101") -- IN rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "01000") -- MOV rdst
+      else (temp_zero) when (opCode(5 downto 1) = "01001") -- Add rdst
+      else (temp_zero) when (opCode(5 downto 1) = "01010") -- SUB rdst
+      else (temp_zero) when (opCode(5 downto 1) = "01011") -- AND rdst
+      else (temp_zero) when (opCode(5 downto 1) = "01100") -- OR rdst
+      else (temp_zero) when (opCode(5 downto 1) = "01101") -- IAdd rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "01110") -- SHL rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "01111") -- SHR rdst
+      else flag_reg(2) when (opCode(5 downto 0) = "001010") -- RLC rdst
+      else flag_reg(2) when (opCode(5 downto 0) = "001011") -- RRC rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "10000") -- push rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "10001") -- pop rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "10010") -- LDM rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "10011") -- LDD rdst
+      else flag_reg(2) when (opCode(5 downto 1) = "10100") -- STD rdst
+      else flag_reg(2);
 
       -- calculating the negative
       lblNeg: fneg <= flag_reg(1) when (opCode(5 downto 0) = "000000") -- NOP
-      else ('0') when (opCode(5 downto 0) = "000001") -- setC
-      else ('0') when (opCode(5 downto 0) = "000010") -- CLRC
+      else flag_reg(1) when (opCode(5 downto 0) = "000001") -- setC
+      else flag_reg(1) when (opCode(5 downto 0) = "000010") -- CLRC
       else ('0') when (opCode(5 downto 0) = "001111") -- CLR rdst
       else (temp_result(n-1)) when (opCode(5 downto 0) = "000100") -- NOT rdst
       else (temp_result(n-1)) when (opCode(5 downto 0) = "000101") -- inc rdst
       else (temp_result(n-1)) when (opCode(5 downto 0) = "000110") -- dec rdst
       else (temp_result(n-1)) when (opCode(5 downto 0) = "000111") -- NEG rdst
-      else ('0') when (opCode(5 downto 0) = "001000") -- OUT rdst
-      else ('0') when (opCode(5 downto 0) = "001101") -- IN rdst
-      else ('0') when (opCode(5 downto 0) = "010000") -- MOV rdst
-      else (temp_result(n-1)) when (opCode(5 downto 0) = "010010") -- Add rdst
-      else (temp_result(n-1)) when (opCode(5 downto 0) = "010100") -- SUB rdst
-      else (temp_result(n-1)) when (opCode(5 downto 0) = "010110") -- AND rdst
-      else (temp_result(n-1)) when (opCode(5 downto 0) = "011000") -- OR rdst
-      else (temp_result(n-1)) when (opCode(5 downto 0) = "011010") -- IAdd rdst
-      else ('0') when (opCode(5 downto 0) = "011100") -- SHL rdst
-      else ('0') when (opCode(5 downto 0) = "011110") -- SHR rdst
-      else ('0') when (opCode(5 downto 0) = "001010") -- RLC rdst
-      else ('0') when (opCode(5 downto 0) = "001011") -- RRC rdst
-      else ('0') when (opCode(5 downto 0) = "100000") -- push rdst
-      else ('0') when (opCode(5 downto 0) = "100010") -- pop rdst
-      else ('0') when (opCode(5 downto 0) = "100100") -- LDM rdst
-      else ('0') when (opCode(5 downto 0) = "100110") -- LDD rdst
-      else ('0') when (opCode(5 downto 0) = "101000") -- STD rdst
-      else ( '0');
+      else flag_reg(1) when (opCode(5 downto 0) = "001000") -- OUT rdst
+      else flag_reg(1) when (opCode(5 downto 0) = "001101") -- IN rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "01000") -- MOV rdst
+      else (temp_result(n-1)) when (opCode(5 downto 1) = "01001") -- Add rdst
+      else (temp_result(n-1)) when (opCode(5 downto 1) = "01010") -- SUB rdst
+      else (temp_result(n-1)) when (opCode(5 downto 1) = "01011") -- AND rdst
+      else (temp_result(n-1)) when (opCode(5 downto 1) = "01100") -- OR rdst
+      else (temp_result(n-1)) when (opCode(5 downto 1) = "01101") -- IAdd rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "01110") -- SHL rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "01111") -- SHR rdst
+      else flag_reg(1) when (opCode(5 downto 0) = "001010") -- RLC rdst
+      else flag_reg(1) when (opCode(5 downto 0) = "001011") -- RRC rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "10000") -- push rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "10001") -- pop rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "10010") -- LDM rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "10011") -- LDD rdst
+      else flag_reg(1) when (opCode(5 downto 1) = "10100") -- STD rdst
+      else flag_reg(1);
 
   end architecture;
