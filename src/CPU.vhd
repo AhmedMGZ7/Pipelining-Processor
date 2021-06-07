@@ -201,6 +201,7 @@ architecture CPUarc of CPU is
     signal enable,fl :  std_logic;
     signal RdstALUEx : std_logic_vector(31 downto 0);
     begin
+      BranchS <= '0';
         LUse : load_use_detection port map(RdstDEEX,BranchedEX,Memory_ReadDEEX,instructionOutS(26 downto 24),instructionOutS(23 downto 21),PC_writeS,enable,fl);
         FetchStage : fetch port map(clk, reset, PC_writeS, PC_AddressS, BranchS, PCUpdatedS, InstructionS);
         Fetch_Decode_Buffer: FDBuff port map(clk,enable, PCUpdatedS, InstructionS, in_port_register, PCoutS, instructionOutS, in_portOutS); 

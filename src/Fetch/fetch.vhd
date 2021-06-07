@@ -9,7 +9,7 @@ entity fetch is
     reset : in std_logic;
     PC_write : in std_logic;
     PC_Address : in std_logic_vector(31 downto 0);
-    Branch : in std_logic;
+    Branch : in std_logic := '0';
     PCUpdated : out std_logic_vector(31 downto 0);
     Instruction : out std_logic_vector(31 downto 0)
   );

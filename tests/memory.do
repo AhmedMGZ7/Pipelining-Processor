@@ -61,8 +61,6 @@ sim:/cpu/Mem_WB_Buffer/ALUresult \
 sim:/cpu/Mem_WB_Buffer/memory_Data_out
 force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/cpu/reset 1 0
-#force -freeze sim:/cpu/PC_writeS 1 0
-force -freeze sim:/cpu/BranchS 0 0
 force -freeze sim:/cpu/in_port_register 00000000000000000000000000011001 0
 mem load -i {C:/Users/Compu Tech/Desktop/Arc Project/Pipelining-Processor/assembler/Memory.mem} /cpu/FetchStage/ram_inst/ram
 run

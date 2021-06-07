@@ -53,8 +53,6 @@ sim:/cpu/ExecuteStage/ALUPart/flag_reg \
 sim:/cpu/ExecuteStage/ALUPart/result
 force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/cpu/reset 1 0
-force -freeze sim:/cpu/PC_writeS 1 0
-force -freeze sim:/cpu/BranchS 0 0
 mem load -i {C:/Users/Compu Tech/Desktop/Arc Project/Pipelining-Processor/assembler/OneOperand.mem} /cpu/FetchStage/ram_inst/ram
 run
 force -freeze sim:/cpu/reset 0 0

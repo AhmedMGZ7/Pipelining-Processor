@@ -24,6 +24,7 @@ architecture load_use_detectionarc of load_use_detection is
       -----------------------------------------
       ---------------fl-----------------------
       enable <= '0' when memory_read = '1' and (Rsrc = Rdstold or Rdst = Rdstold) else
+      '0' when branch = '1'else
       '1';
       ----------------------------------------
 end architecture;
