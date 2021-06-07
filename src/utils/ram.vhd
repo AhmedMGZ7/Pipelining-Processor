@@ -22,10 +22,7 @@ ARCHITECTURE syncrama OF ram is
 	begin
 		process(clk) is
 			begin
-				if reset = '1' then
-					dataout(31 downto 16) <= (others => '0');
-					dataout(15 downto 0 ) <= ram(0);
-				elsif rising_edge(clk) and en = '1' THEN  
+				if rising_edge(clk) and en = '1' THEN  
 					if we = '1' THEN
 						ram(to_integer(unsigned(address))) <= datain(31 downto 16);
 						ram((to_integer(unsigned(address)))+1) <= datain(15 downto 0);
@@ -33,6 +30,9 @@ ARCHITECTURE syncrama OF ram is
 						dataout(31 downto 16)<= ram(to_integer(unsigned(address)));
 						dataout(15 downto 0) <= ram((to_integer(unsigned(address))) +1);
 					end if;
+				elsif reset = '1' then
+					dataout(31 downto 16) <= (others => '0');
+					dataout(15 downto 0 ) <= ram(0);
 				end if;
 		end process;
 end syncrama;

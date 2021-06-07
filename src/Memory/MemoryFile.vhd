@@ -16,21 +16,21 @@ entity MemoryFile is
 end entity MemoryFile;
 
 architecture MemoryFilearc of MemoryFile is
-    component ram is
-        port (
-          clk     : in std_logic;
-          en : in std_logic;
-          we      : in std_logic;
-          address : in std_logic_vector(31 downto 0);
-          datain  : in std_logic_vector(31 downto 0);
-          dataout : out std_logic_vector(31 downto 0)
+    component memram is
+      port(
+        clk : in std_logic;
+        en : in std_logic;
+        we  : in std_logic;
+        address : in  std_logic_vector(31 downto 0);
+        datain  : in  std_logic_vector(31 downto 0);
+        dataout : out std_logic_vector(31 downto 0)
         );
     end component;
     signal dataout : std_logic_vector(31 downto 0);
     signal enable : std_logic;
     begin
-      enable <= MemoryWrite or MemoryRead;
-    ram_inst_Data: ram port map(clk,enable, MemoryWrite , ALUresult, RdstValue, dataout);
+    enable <= MemoryWrite or MemoryRead;
+    ram_inst_Data: memram port map(clk,enable, MemoryWrite , ALUresult, RdstValue, dataout);
     data <= dataout when MemoryRead = '1'else
     (others => '0');
 end architecture;

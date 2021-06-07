@@ -56,28 +56,21 @@ force -freeze sim:/cpu/reset 1 0
 force -freeze sim:/cpu/PC_writeS 1 0
 force -freeze sim:/cpu/BranchS 0 0
 force -freeze sim:/cpu/in_port_register 00000000000000000000000000000101 0
-mem load -filltype value -filldata  0011010000100000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(0)
-mem load -filltype value -filldata {0011010001000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(1)
-mem load -filltype value -filldata {0011010001100000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(2)
-mem load -filltype value -filldata {0011010010000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(3)
-mem load -filltype value -filldata {0100001110100000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(4)
-mem load -filltype value -filldata {0100100110000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(5)
-mem load -filltype value -filldata {0101010110000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(6)
-mem load -filltype value -filldata {0101111010000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(7)
-mem load -filltype value -filldata {0110001000100000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(8)
-mem load -filltype value -filldata {0111000001000010 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(9)
-mem load -filltype value -filldata {0111100001000011 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(10)
-mem load -filltype value -filldata {0110100001000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(11)
-mem load -filltype value -filldata {1111111111111111 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(12)
-mem load -filltype value -filldata {0100100101000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(13)
+mem load -i {C:/Users/Compu Tech/Desktop/Arc Project/Pipelining-Processor/assembler/TowOperand.mem} /cpu/FetchStage/ram_inst/ram
 run
 force -freeze sim:/cpu/reset 0 0
+run
 run
 force -freeze sim:/cpu/in_port_register 00000000000000000000000000011001 0
 run
 force -freeze sim:/cpu/in_port_register 11111111111111111111111111111111 0
 run
 force -freeze sim:/cpu/in_port_register 11111111111111111111001100100000 0
+run
+run
+run
+run
+run
 run
 run
 run

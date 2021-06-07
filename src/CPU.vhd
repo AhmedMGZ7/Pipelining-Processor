@@ -39,6 +39,7 @@ architecture CPUarc of CPU is
     component FDBuff is
       port(
       clk : in std_logic; 
+      enable : in std_logic;
       PC : in std_logic_vector(31 downto 0);
       instruction : in std_logic_vector(31 downto 0);
       in_port : in std_logic_vector(31 downto 0);
@@ -50,6 +51,7 @@ architecture CPUarc of CPU is
     component DEXBuffer is
       port(
   	clk : in std_logic; 
+    enable : in std_logic;
 	  PCin : in std_logic_vector(31 downto 0);
 	  Rsrc1Valuein : in std_logic_vector(31 downto 0);
 	  Rsrc2Valuein : in std_logic_vector(31 downto 0);
@@ -163,6 +165,18 @@ architecture CPUarc of CPU is
       Rdstnew : out std_logic_vector(1 downto 0) 
     );
   end component;
+  component load_use_detection is
+    port (
+      Rdstold : in std_logic_vector(2 downto 0);
+      branch : in std_logic;
+      memory_read : in std_logic;
+      Rsrc : in std_logic_vector(2 downto 0); 
+      Rdst : in std_logic_vector(2 downto 0);
+      PC_write : out std_logic;
+      enable : out std_logic;
+      fl : out std_logic
+    );
+  end component;
     signal writeDataD : std_logic_vector(31 downto 0);
     signal PC_writeS , BranchS : std_logic;
     signal PCUpdatedS, PC_AddressS, InstructionS, PCoutS, instructionOutS, in_portOutS : std_logic_vector(31 downto 0);
@@ -183,11 +197,13 @@ architecture CPUarc of CPU is
 	  signal ALUresultMWB : std_logic_vector(31 downto 0);
 	  signal RdstMWB : std_logic_vector(2 downto 0);
 	  signal memory_Data_outMWB : std_logic_vector(31 downto 0);
+    signal enable,fl :  std_logic;
     begin
+        LUse : load_use_detection port map(RdstDEEX,BranchedEX,Memory_ReadDEEX,instructionOutS(26 downto 24),instructionOutS(23 downto 21),PC_writeS,enable,fl);
         FetchStage : fetch port map(clk, reset, PC_writeS, PC_AddressS, BranchS, PCUpdatedS, InstructionS);
-        Fetch_Decode_Buffer: FDBuff port map(clk, PCUpdatedS, InstructionS, in_port_register, PCoutS, instructionOutS, in_portOutS); 
+        Fetch_Decode_Buffer: FDBuff port map(clk,enable, PCUpdatedS, InstructionS, in_port_register, PCoutS, instructionOutS, in_portOutS); 
         DecodeStage : Decode port map (clk, reset, instructionOutS,RegisterWriteMWB,writeDataD,RdstMWB, Source1S, Source2S, shamtS, immediateValueS, controlsignalsS);
-        Decode_execute_Buffer : DEXBuffer port map(clk,PCoutS,Source1S,Source2S,immediateValueS,shamtS,instructionOutS(26 downto 24),instructionOutS(23 downto 21),in_portOutS,controlsignalsS,PCDEEX,Rsrc1ValueDEEX,Rsrc2ValueDEEX,immediateValueDEEX,shmatDEEX,RsrcDEEX,RdstDEEX,in_portDEEX,ALU_OpDEEX,Imm_ShiftDEEX,BranchDEEX,Memory_ReadDEEX,Memory_WriteDEEX,Register_WriteDEEX,MemoryToRegisterDEEX,out_portDEEX);
+        Decode_execute_Buffer : DEXBuffer port map(clk,enable,PCoutS,Source1S,Source2S,immediateValueS,shamtS,instructionOutS(26 downto 24),instructionOutS(23 downto 21),in_portOutS,controlsignalsS,PCDEEX,Rsrc1ValueDEEX,Rsrc2ValueDEEX,immediateValueDEEX,shmatDEEX,RsrcDEEX,RdstDEEX,in_portDEEX,ALU_OpDEEX,Imm_ShiftDEEX,BranchDEEX,Memory_ReadDEEX,Memory_WriteDEEX,Register_WriteDEEX,MemoryToRegisterDEEX,out_portDEEX);
         ExecuteStage : Execute port map (clk, reset, Rsrc1ValueDEEX, Rsrc2ValueDEEX, writeDataD, ALUresultEXM, RsrcSelectEX, RdstSelectEX, in_portDEEX, ALU_OpDEEX,Imm_ShiftDEEX, shmatDEEX, immediateValueDEEX, BranchDEEX, BranchedEX, ALUresultEX );
         Execute_mem_Buffer: EXMBuffer port map (clk, ALUresultEX,PCDEEX, Rsrc2ValueDEEX, RdstDEEX, MemoryToRegisterDEEX,Register_WriteDEEX,Memory_ReadDEEX,Memory_WriteDEEX, out_portDEEX, ALUresultEXM, PCEXM, RdstValueEXM, RdstEXM, MemoryToRegisterEXM, RegisterWriteEXM,Memory_ReadEXM, Memory_WriteEXM , out_portEXM );
         MemoryStage : Memory port map(clk, reset, Memory_ReadEXM, Memory_WriteEXM, ALUresultEXM, RdstValueEXM, out_portEXM, dataMem);

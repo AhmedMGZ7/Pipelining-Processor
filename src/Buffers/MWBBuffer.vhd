@@ -26,6 +26,7 @@ begin
 			RegisterWrite <= RegisterWritein;
 			ALUresult <= ALUresultin;
             Rdst <= Rdstin;
+			memory_Data_out <= memory_Data;
 		end if;
 	end process;
 end ARCHITECTURE;

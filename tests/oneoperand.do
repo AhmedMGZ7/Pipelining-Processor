@@ -55,24 +55,11 @@ force -freeze sim:/cpu/clk 1 0, 0 {50 ps} -r 100
 force -freeze sim:/cpu/reset 1 0
 force -freeze sim:/cpu/PC_writeS 1 0
 force -freeze sim:/cpu/BranchS 0 0
-force -freeze sim:/cpu/in_port_register 00000000000000000000000000000101 0
-mem load -filltype value -filldata 0000010000000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(0)
-mem load -filltype value -filldata {0000000000000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(1)
-mem load -filltype value -filldata {0000100000000000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(2)
-mem load -filltype value -filldata {0001000000100000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(3)
-mem load -filltype value -filldata {0001010000100000 } -fillradix symbolic /cpu/FetchStage/ram_inst/ram(4)
-mem load -filltype value -filldata 0011010000100000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(5)
-mem load -filltype value -filldata 0011010001000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(6)
-mem load -filltype value -filldata 0001000001000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(7)
-mem load -filltype value -filldata 0001010000100000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(8)
-mem load -filltype value -filldata 0001100001000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(9)
-mem load -filltype value -filldata 0010000000100000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(10)
-mem load -filltype value -filldata 0010000001000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(11)
-mem load -filltype value -filldata 0000010000000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(12)
-mem load -filltype value -filldata 0010100000100000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(13)
-mem load -filltype value -filldata 0010110001000000 -fillradix symbolic /cpu/FetchStage/ram_inst/ram(14)
+mem load -i {C:/Users/Compu Tech/Desktop/Arc Project/Pipelining-Processor/assembler/OneOperand.mem} /cpu/FetchStage/ram_inst/ram
 run
 force -freeze sim:/cpu/reset 0 0
+force -freeze sim:/cpu/in_port_register 00000000000000000000000000000101 0
+run
 run
 run
 run
@@ -80,7 +67,6 @@ run
 run
 run
 force -freeze sim:/cpu/in_port_register 00000000000000000000000000010000 0
-run
 run
 run
 run

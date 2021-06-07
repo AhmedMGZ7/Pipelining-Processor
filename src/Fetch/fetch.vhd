@@ -53,18 +53,20 @@ architecture fetcharc of fetch is
   signal PCdatain,PCdataOut,indata,instructionout : std_logic_vector(31 downto 0);
   signal PCnew : std_logic_vector(31 downto 0);
   signal clk_pc : std_logic;
+  signal PCin : std_logic_vector(31 downto 0);
   begin
     clk_pc <= not clk;
-    PCdatain <= instructionout when reset = '1';
+    PCin <= instructionout when reset = '1'
+    else PCdatain;
     PCmux : mux2x1 port map (Branch,PCnew,PC_Address,PCdatain);
-    PC: reg port map (clk_pc,PC_write,'0',PCdatain,PCdataOut);
+    PC: reg port map (clk_pc,PC_write,'0',PCin,PCdataOut);
     PCINcrement : PCData port map (instructionout,PCdataOut,PCnew);
     ram_inst: ram port map(clk,reset,'1', '0', PCdataOut, indata, instructionout);
-    Instruction <= instructionout;
     process(clk)
     begin
       if rising_edge(clk) then
       PCUpdated <= PCnew;
+      Instruction <= instructionout;
       end if;
     end process;
 end architecture;

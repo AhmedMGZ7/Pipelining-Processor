@@ -52,15 +52,20 @@ architecture ALUarc of ALU is
       else (rdst(30 downto 0)&flag_reg(0)) when (opCode(5 downto 0) = "001010") -- RLC rdst
       else (flag_reg(0) & rdst(31 downto 1)) when (opCode(5 downto 0) = "001011") -- RRC rdst
       else (sp_in) when (opCode(5 downto 0) = "100000") -- push rdst
+      else (sp_in) when (opCode(5 downto 0) = "100001") -- push rdst
       else (sp_in+2) when (opCode(5 downto 0) = "100010") -- pop rdst
+      else (sp_in+2) when (opCode(5 downto 0) = "100011") -- pop rdst
       else (shift_immediate) when (opCode(5 downto 0) = "100100") -- LDM rdst
+      else (shift_immediate) when (opCode(5 downto 0) = "100101") -- LDM rdst
       else (rsrc + shift_immediate) when (opCode(5 downto 0) = "100110") -- LDD rdst
+      else (rsrc + shift_immediate) when (opCode(5 downto 0) = "100111") -- LDD rdst
       else (rsrc + shift_immediate) when (opCode(5 downto 0) = "101000") -- STD rdst
+      else (rsrc + shift_immediate) when (opCode(5 downto 0) = "101001") -- STD rdst
       else (others => '0');
 
       lblStackPointer : sp_new <= sp_in-2 when (opCode(5 downto 0) = "100000")
       else sp_in+2 when (opCode(5 downto 0) = "100010")
-      else (others => '0');
+      else sp_in;
 
       -- the shift left and right
       lblShiftLef: shift_left_result <=  std_logic_vector(shift_left(unsigned('0' & rdst), to_integer(unsigned(shift_immediate))));

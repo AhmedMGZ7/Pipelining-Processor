@@ -35,7 +35,7 @@ architecture Executearc of Execute is
         fcout, fneg, fzero: out std_logic
     ) ;
     end component;
-    component reg IS
+    component sp IS
 	 PORT(
 	 	clk : IN std_logic; 
 		en : in std_logic;
@@ -86,10 +86,11 @@ architecture Executearc of Execute is
         flag_reg <= (ZeroFlag&NegativeFlag&CarryFlag);
         shiftOrImm : mux2x1 port map(ShiftImmediate,ImmediateValue,Shmat,SOrImm);
         RsrcSetect : mux4x2 port map(RsrcSelect,RsrcValue, Rdst_old2,Rdst_old, RsrcALU);
-        RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old2,Rdst_old, RdstALU);
+        --RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old2,Rdst_old, RdstALU);
+        RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old,Rdst_old2, RdstALU);
         Decision : BranchDecision port map(Branch,ZeroFlag,NegativeFlag,CarryFlag,ALU_op,BorNot);
         flagReg : ccr port map (clk,'1',reset,flag_reg,flag_reg_out);
-        SP : reg port map(NotClk, '1', reset,Spin, SPout);
+        SPreg : sp port map(clk, '1', reset,Spin, SPout);
         ALUPart : ALU port map(RsrcALU,RdstALU,inport_reg,SOrImm,SPout,flag_reg_out,ALU_op,ALUR,Spin,CarryFlag,NegativeFlag,ZeroFlag);
         process(clk)
         begin

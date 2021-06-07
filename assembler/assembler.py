@@ -5,6 +5,7 @@ in_file_name = "Memory.asm"
 in_file_name = "Branch.asm"
 in_file_name = "OneOperand.asm"
 in_file_name = "TowOperand.asm"
+in_file_name = "Memory.asm"
 out_file_name = in_file_name.split('.')[0] + ".mem"
 mem_size = 2**16  # words
 word_size = 16
