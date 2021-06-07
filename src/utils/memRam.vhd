@@ -15,18 +15,20 @@ end entity memram;
 
 ARCHITECTURE memramarc OF memram is
 
-	type ram_type is array(0 TO 2**20-1) OF std_logic_vector(31 downto 0);
+	type ram_type is array(0 TO 2**20-1) OF std_logic_vector(15 downto 0);
 	signal ram : ram_type;
 	
 	begin
 		process(clk) is
 			begin
 				if rising_edge(clk) and en = '1' THEN  
-					if we = '1' THEN
-						ram(to_integer(unsigned(address))) <= datain;
-					else
-						dataout<= ram(to_integer(unsigned(address)));
-					end if;
+				if we = '1' THEN
+					ram(to_integer(unsigned(address))) <= datain(31 downto 16);
+					ram((to_integer(unsigned(address)))+1) <= datain(15 downto 0);
+				else
+					dataout(31 downto 16)<= ram(to_integer(unsigned(address)));
+					dataout(15 downto 0) <= ram((to_integer(unsigned(address))) +1);
+			end if;
 				end if;
 		end process;
 end ARCHITECTURE;
