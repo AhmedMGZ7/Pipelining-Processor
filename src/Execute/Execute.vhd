@@ -19,6 +19,7 @@ entity Execute is
     ImmediateValue : in std_logic_vector(31 downto 0);
     Branch : in std_logic;
     Branched : out std_logic;
+    RdstALUE : out std_logic_vector(31 downto 0);
     ALUresult : out std_logic_vector(31 downto 0)
   );
 end entity Execute;
@@ -86,8 +87,7 @@ architecture Executearc of Execute is
         flag_reg <= (ZeroFlag&NegativeFlag&CarryFlag);
         shiftOrImm : mux2x1 port map(ShiftImmediate,ImmediateValue,Shmat,SOrImm);
         RsrcSetect : mux4x2 port map(RsrcSelect,RsrcValue, Rdst_old2,Rdst_old, RsrcALU);
-        --RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old2,Rdst_old, RdstALU);
-        RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old,Rdst_old2, RdstALU);
+        RdstSetect : mux4x2 port map(RdstSelect,RdstValue, Rdst_old2,Rdst_old, RdstALU);
         Decision : BranchDecision port map(Branch,ZeroFlag,NegativeFlag,CarryFlag,ALU_op,BorNot);
         flagReg : ccr port map (clk,'1',reset,flag_reg,flag_reg_out);
         SPreg : sp port map(clk, '1', reset,Spin, SPout);
@@ -95,6 +95,7 @@ architecture Executearc of Execute is
         process(clk)
         begin
             if rising_edge(clk) then
+                RdstALUE <= RdstALU;
                 ALUresult <= ALUR;
             end if;
         end process;

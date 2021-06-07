@@ -17,9 +17,11 @@ end entity ForwardingUnit;
 architecture ForwardingUnitarc of ForwardingUnit is
     begin
       Rsrcnew <= "01" when Rsrc = Rdst_old2 and  MtoR1 = '0'else
+      "10" when Rsrc = Rdst_old1  and  MtoR2 = '1'else
       "10" when Rsrc = Rdst_old1  and  MtoR2 = '0'else
       "00" ;
       Rdstnew <= "01" when Rdst = Rdst_old2 and  MtoR1 = '0'else
+      "10" when (Rdst = Rdst_old1  and  MtoR2 = '1')else
       "10" when (Rdst = Rdst_old1  and  MtoR2 = '0')else
       "00";
 end architecture;
