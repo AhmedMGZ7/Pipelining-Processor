@@ -17,7 +17,7 @@ end ALU;
 
 architecture ALUarc of ALU is
   signal temp_cout, temp_neg, temp_zero:  std_logic;
-  signal shift_left_result,shift_right_result,add_result,sub_result,iadd_result : std_logic_vector (n downto 0);
+  signal shift_left_result,shift_right_result,add_result,sub_result,iadd_result,incrsult,decresult : std_logic_vector (n downto 0);
   signal rsrc_tow_complement,rdst_tow_complement, temp_result : std_logic_vector (n-1 downto 0);
 
     begin
@@ -72,6 +72,8 @@ architecture ALUarc of ALU is
       lblShiftRight: shift_right_result <=  std_logic_vector(shift_right(unsigned(rdst & '0'), to_integer(unsigned(shift_immediate))));
 
       -- add and subtract
+      incrsult <= '0'& rdst + 1;
+      decresult <= '0' & rdst - 1 ;
       -- rsrc_tow_complement <= not(rsrc)+1;
       rdst_tow_complement <= not(rdst)+1;
       add_result <= '0' & rdst + rsrc;
@@ -91,8 +93,8 @@ architecture ALUarc of ALU is
       else ('0') when (opCode(5 downto 0) = "000010") -- CLRC
       else flag_reg(0) when (opCode(5 downto 0) = "001111") -- CLR rdst
       else flag_reg(0) when (opCode(5 downto 0) = "000100") -- NOT rdst
-      else flag_reg(0) when (opCode(5 downto 0) = "000101") -- inc rdst
-      else flag_reg(0) when (opCode(5 downto 0) = "000110") -- dec rdst
+      else incrsult(n) when (opCode(5 downto 0) = "000101") -- inc rdst
+      else decresult(n) when (opCode(5 downto 0) = "000110") -- dec rdst
       else flag_reg(0) when (opCode(5 downto 0) = "000111") -- NEG rdst
       else flag_reg(0) when (opCode(5 downto 0) = "001000") -- OUT rdst
       else flag_reg(0) when (opCode(5 downto 0) = "001101") -- IN rdst
